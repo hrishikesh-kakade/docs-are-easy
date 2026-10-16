@@ -1,0 +1,58 @@
+---
+import Shell from './Shell.astro';
+import { Icon } from './Icons';
+import { T, type Lang } from '../i18n';
+import { TOOLS } from '../data/tools';
+import { TI, TU } from '../lib/tools-i18n';
+const { lang } = Astro.props as { lang: Lang };
+const t = T[lang], u = TU[lang];
+const base = lang === 'en' ? '/' : `/${lang}/`;
+const EXAMS: [string, string][] = [['SSC CGL', 'ssc-cgl-latest'], ['UPSC CSE', 'upsc-cse-latest'], ['IBPS PO', 'ibps-po-latest'], ['SBI PO', 'sbi-po-latest'],
+  ['RRB NTPC', 'rrb-ntpc-latest'], ['CTET', 'ctet-latest'], ['MPSC', 'maharashtra-mpsc-latest'], ['UPPSC', 'uttar-pradesh-uppsc-latest']];
+const POP = ['resizer', 'imgpdf', 'compress', 'merge', 'sign', 'split'].map((id) => TOOLS.find((x) => x.id === id)!);
+---
+<Shell lang={lang} title={`${t.homeH1} | Docs Are Easy`} desc={t.homeSub} home>
+  <section class="hero3">
+    <h1>{t.homeH1}</h1>
+    <p class="sub">{t.homeSub}</p>
+    <div class="cta">
+      <a class="btn lg" href={`${base}exam/`}>{t.c1B}<Icon name="right" /></a>
+      <a class="btn ghost lg" href={`${base}tools/`}>{t.c2B}</a>
+    </div>
+    <ul class="chips3">
+      <li><Icon name="check" />{t.v1}</li>
+      <li><Icon name="check" />{t.v2}</li>
+      <li><Icon name="check" />{t.v3}</li>
+    </ul>
+  </section>
+
+  <h2 class="h3">{t.whyT}</h2>
+  <div class="trust3">
+    <section class="card"><span class="ti big"><Icon name="alert" /></span><h3>{t.pT}</h3><p>{t.pD}</p></section>
+    <section class="card"><span class="ti big"><Icon name="check" /></span><h3>{t.wT}</h3><p>{t.wD}</p></section>
+    <section class="card"><span class="ti big"><Icon name="download" /></span><h3>{t.dT}</h3><p>{t.dD}</p></section>
+  </div>
+
+  <h2 class="h3">{u.popExams}</h2>
+  <div class="chips wrapchips">
+    {EXAMS.map(([n, id]) => <a class="chipbtn" href={`${base}exam/?exam=${id}`}>{n}</a>)}
+  </div>
+
+  <h2 class="h3">{u.popTools}</h2>
+  <div class="tgrid">
+    {POP.map((x) => (
+      <a class="trow" href={`${base}tools/${x.slug}/`}>
+        <span class="ti big"><Icon name={x.icon} /></span>
+        <span class="trt"><strong>{TI[lang][x.id][0]}</strong><span class="hint">{TI[lang][x.id][1]}</span></span>
+        <Icon name="right" />
+      </a>
+    ))}
+  </div>
+
+  <h2 class="h3">{t.trustT}</h2>
+  <div class="trust3">
+    <section class="card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" /></svg><h3>{t.t1T}</h3><p>{t.t1D}</p></section>
+    <section class="card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg><h3>{t.t2T}</h3><p>{t.t2D}</p></section>
+    <section class="card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4" /></svg><h3>{t.t3T}</h3><p>{t.t3D}</p></section>
+  </div>
+</Shell>

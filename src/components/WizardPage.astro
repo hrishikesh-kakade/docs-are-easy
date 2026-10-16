@@ -1,0 +1,22 @@
+---
+import Shell from './Shell.astro';
+import { Icon } from './Icons';
+import Wizard from './Wizard';
+import data from '../data/notifications.json';
+import { Notifications } from '../data/schema';
+import { checkAll } from '../data/types';
+import { T, type Lang } from '../i18n';
+const { lang } = Astro.props as { lang: Lang };
+const t = T[lang];
+const list = Notifications.parse(data);
+const problems = checkAll(list);
+if (problems.length) throw new Error('Exam data problems:\n' + problems.join('\n'));
+---
+<Shell lang={lang} path="exam/" title={`${t.c1T} | Docs Are Easy`} desc={t.c1D}>
+  <div class="pagehead">
+    <span class="ti big"><Icon name="file" /></span>
+    <div class="ph-text"><h1>{t.c1T}</h1><p class="sub">{t.c1D}</p></div>
+    <p class="lock">{t.privacy}</p>
+  </div>
+  <Wizard client:load lang={lang} data={list} />
+</Shell>

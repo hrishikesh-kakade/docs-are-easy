@@ -1,0 +1,61 @@
+---
+import Shell from './Shell.astro';
+import { Icon } from './Icons';
+import { T, type Lang } from '../i18n';
+import { TOOLS } from '../data/tools';
+import { TI, TU } from '../lib/tools-i18n';
+const { lang } = Astro.props as { lang: Lang };
+const t = T[lang], u = TU[lang];
+const base = lang === 'en' ? '/' : `/${lang}/`;
+const hay = (id: string) => TI[lang][id].join(' ').toLowerCase();
+const GROUPS = [['image', u.gImage], ['organize', u.gOrganize], ['edit', u.gEdit], ['optimize', u.gOptimize], ['secure', u.gSecure], ['read', u.gRead]] as const;
+const POP = ['resizer', 'imgpdf', 'compress', 'merge', 'sign', 'split'].map((id) => TOOLS.find((x) => x.id === id)!);
+---
+<Shell lang={lang} path="tools/" title={`${t.toolsT} | Docs Are Easy`} desc={t.toolsD}>
+  <h1>{t.toolsT}</h1>
+  <p class="sub">{t.toolsD}</p>
+  <div class="search wide">
+    <span class="si"><Icon name="search" /></span>
+    <input id="tsearch" type="search" aria-label={u.search} placeholder={u.search} />
+  </div>
+
+  <h2 class="h3">{u.popTools}</h2>
+  <div class="tgrid">
+    {POP.map((x) => (
+      <a class="trow" href={`${base}tools/${x.slug}/`} data-tool={hay(x.id)}>
+        <span class="ti big"><Icon name={x.icon} /></span>
+        <span class="trt"><strong>{TI[lang][x.id][0]}</strong><span class="hint">{TI[lang][x.id][1]}</span></span>
+        <Icon name="right" />
+      </a>
+    ))}
+  </div>
+
+  {GROUPS.map(([key, label]) => (
+    <section>
+      <h2 class="h3">{label}</h2>
+      <div class="tgrid">
+        {TOOLS.filter((x) => x.group === key).map((x) => (
+          <a class="trow" href={`${base}tools/${x.slug}/`} data-tool={hay(x.id)}>
+            <span class="ti big"><Icon name={x.icon} /></span>
+            <span class="trt"><strong>{TI[lang][x.id][0]}</strong><span class="hint">{TI[lang][x.id][1]}</span></span>
+            <Icon name="right" />
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  {TOOLS.some((x) => !x.live) && <h2 class="h3">{t.soon}</h2>}
+  <div class="tgrid">
+    {TOOLS.filter((x) => !x.live).map((x) => (
+      <div class="trow soonrow" data-tool={hay(x.id)}>
+        <span class="ti big"><Icon name={x.icon} /></span>
+        <span class="trt"><strong>{TI[lang][x.id][0]}</strong><span class="hint">{TI[lang][x.id][1]}</span></span>
+        <span class="chip">{t.soon}</span>
+      </div>
+    ))}
+  </div>
+  <script is:inline>
+    (function(){var i=document.getElementById('tsearch');if(!i)return;i.addEventListener('input',function(){var q=i.value.trim().toLowerCase();document.querySelectorAll('[data-tool]').forEach(function(el){el.hidden=!!q&&el.getAttribute('data-tool').indexOf(q)<0;});});})();
+  </script>
+</Shell>

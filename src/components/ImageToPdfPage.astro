@@ -1,0 +1,18 @@
+---
+import Shell from './Shell.astro';
+import { Icon } from './Icons';
+import { W } from '../lib/wizard-i18n';
+import ImageToPdf from './ImageToPdf';
+import { T, type Lang } from '../i18n';
+import { TI } from '../lib/tools-i18n';
+const { lang } = Astro.props as { lang: Lang };
+const t = T[lang];
+const base = lang === 'en' ? '/' : `/${lang}/`;
+const [name, desc] = TI[lang].imgpdf;
+---
+<Shell lang={lang} path="tools/image-to-pdf/" title={`${name} | Docs Are Easy`} desc={desc}>
+  <div class="toolhead"><a class="btn ghost" href={`${base}tools/`}><Icon name="left" />{W[lang].back}</a><nav class="crumbs" aria-label="Breadcrumb"><a href={`${base}tools/`}>{t.navTools}</a><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg><strong aria-current="page">{name}</strong></nav><p class="lock end">{t.privacy}</p></div>
+  <h1>{name}</h1>
+  <p class="sub">{desc}</p>
+  <ImageToPdf client:load lang={lang} />
+</Shell>

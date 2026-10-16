@@ -1,0 +1,21 @@
+Docs Are Easy: files changed in this update (compared with the previous ApplyReady version)
+Do NOT overwrite package.json, package-lock.json or astro.config.mjs in your own project. Make the small edits described in the chat reply instead.
+
+changed: README.md
+changed: astro.config.mjs
+changed: package.json
+changed: src/components/HomePage.astro
+changed: src/components/ImageToPdf.tsx
+changed: src/components/ImageToPdfPage.astro
+changed: src/components/MergePdf.tsx
+changed: src/components/PdfTool.tsx
+changed: src/components/ResizerPage.astro
+changed: src/components/Shell.astro
+changed: src/components/ToolPage.astro
+changed: src/components/ToolParts.tsx
+changed: src/components/ToolsPage.astro
+changed: src/components/Wizard.tsx
+changed: src/components/WizardPage.astro
+changed: src/i18n.ts
+changed: src/styles.css
+new:     public/favicon.svg

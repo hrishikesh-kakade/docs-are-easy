@@ -1,0 +1,16 @@
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local development
+.DS_Store
+Thumbs.db

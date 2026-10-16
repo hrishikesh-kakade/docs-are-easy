@@ -1,0 +1,42 @@
+---
+import Shell from './Shell.astro';
+import { Icon } from './Icons';
+import { W } from '../lib/wizard-i18n';
+import CompressPdf from './CompressPdf';
+import MergePdf from './MergePdf';
+import ImageToPdf from './ImageToPdf';
+import PdfTool, { type PdfId } from './PdfTool';
+import ToolMarkdown from './ToolMarkdown';
+import ToolForms from './ToolForms';
+import ToolEdit from './ToolEdit';
+import ToolRedact from './ToolRedact';
+import ToolCompare from './ToolCompare';
+import ToolOcr from './ToolOcr';
+import ToolSecure from './ToolSecure';
+import { T, type Lang } from '../i18n';
+import { TOOLS } from '../data/tools';
+import { TI } from '../lib/tools-i18n';
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const t = T[lang];
+const base = lang === 'en' ? '/' : `/${lang}/`;
+const tool = TOOLS.find((x) => x.slug === slug)!;
+const [name, desc] = TI[lang][tool.id];
+const PDF_IDS = ['split', 'rotate', 'organize', 'pagenum', 'watermark', 'crop', 'pdf2jpg', 'sign', 'repair'];
+---
+<Shell lang={lang} path={`tools/${slug}/`} title={`${name} | Docs Are Easy`} desc={desc}>
+  <div class="toolhead"><a class="btn ghost" href={`${base}tools/`}><Icon name="left" />{W[lang].back}</a><nav class="crumbs" aria-label="Breadcrumb"><a href={`${base}tools/`}>{t.navTools}</a><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg><strong aria-current="page">{name}</strong></nav><p class="lock end">{t.privacy}</p></div>
+  <h1>{name}</h1>
+  <p class="sub">{desc}</p>
+  {tool.id === 'compress' && <CompressPdf client:load lang={lang} />}
+  {tool.id === 'merge' && <MergePdf client:load lang={lang} />}
+  {tool.id === 'scan' && <ImageToPdf client:load lang={lang} scan />}
+  {PDF_IDS.includes(tool.id) && <PdfTool client:load lang={lang} id={tool.id as PdfId} />}
+  {tool.id === 'pdf2md' && <ToolMarkdown client:load lang={lang} />}
+  {tool.id === 'forms' && <ToolForms client:load lang={lang} />}
+  {tool.id === 'edit' && <ToolEdit client:load lang={lang} />}
+  {tool.id === 'redact' && <ToolRedact client:load lang={lang} />}
+  {tool.id === 'compare' && <ToolCompare client:load lang={lang} />}
+  {tool.id === 'ocr' && <ToolOcr client:load lang={lang} />}
+  {tool.id === 'protect' && <ToolSecure client:load lang={lang} mode="protect" />}
+  {tool.id === 'unlock' && <ToolSecure client:load lang={lang} mode="unlock" />}
+</Shell>
