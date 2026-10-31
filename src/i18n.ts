@@ -53,7 +53,7 @@ const en = {
   menu: 'Menu',
   theme: 'Switch light or dark theme',
   homeH1: 'Your documents, ready in minutes',
-  homeSub: 'A free, privacy-first toolkit to prepare, convert, compress and organize documents, made especially for Indian exam applications.',
+  homeSub: 'Free online PDF tools to merge, compress, sign, convert and organize documents. Prepare documents for Indian exam applications with Docs Are Easy.',
   c1T: 'Your application files, sorted',
   c1D: 'Choose an exam, drop in your photo, signature and certificates, and take home correctly sized files, one by one or as a single ZIP.',
   c1B: 'Prepare my documents',
